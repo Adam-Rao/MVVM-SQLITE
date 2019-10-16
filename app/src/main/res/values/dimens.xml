@@ -2,4 +2,5 @@
 <resources>
     <dimen name="general_dimension">8dp</dimen>
     <dimen name="card_padding">4dp</dimen>
+    <dimen name="card_radius">4dp</dimen>
 </resources>

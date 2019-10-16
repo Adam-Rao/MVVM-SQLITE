@@ -3,8 +3,8 @@ package db
 import android.provider.BaseColumns
 import android.provider.BaseColumns._ID
 
-class ContractClass {
-    companion object class Task(): BaseColumns {
+class ContractClass private constructor() {
+    companion object class Task: BaseColumns {
         companion object {
             const val TABLE_NAME = "tasks"
             const val TASK_COLUMN = "task"

@@ -7,50 +7,54 @@
     tools:context=".ui.MainActivity">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/some_shit_one_layout"
+        android:id="@+id/task_type_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/some_shit"
-        android:layout_margin="@dimen/general_dimension"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="@dimen/general_dimension"
+        android:layout_marginTop="@dimen/general_dimension"
+        android:layout_marginEnd="@dimen/general_dimension"
+        android:hint="@string/enter_task"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/some_shit_one_input"
+            android:id="@+id/et_task_input"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/some_shit_two_layout"
+        android:id="@+id/task_completed_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/some_shit_two"
-        android:layout_margin="@dimen/general_dimension"
-        app:layout_constraintTop_toBottomOf="@id/some_shit_one_layout"
+        android:layout_marginStart="@dimen/general_dimension"
+        android:layout_marginTop="@dimen/general_dimension"
+        android:layout_marginEnd="@dimen/general_dimension"
+        android:hint="@string/task_completed"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/task_type_layout">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/some_shit_two_input"
+            android:id="@+id/et_completed_input"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/btnAdd"
+        android:id="@+id/btn_add_task"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:text="@string/add_task"
         android:layout_marginStart="@dimen/general_dimension"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/general_dimension"
         android:layout_marginEnd="@dimen/general_dimension"
-        android:text="@string/add_shit"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/some_shit_two_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/task_completed_layout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
