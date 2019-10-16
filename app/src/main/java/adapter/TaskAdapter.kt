@@ -16,13 +16,16 @@ class TaskAdapter(private val context: Context, private val cursor: Cursor):
     private var taskPos: Int = 0
     private var completed: Int = 0
     private val contractClass = ContractClass.Task
+    private var id: Int = 0
 
     init {
         this.taskPos = cursor.getColumnIndex(contractClass.TASK_COLUMN)
         this.completed = cursor.getColumnIndex(contractClass.COMPLETED_COLUMN)
+        this.id = cursor.getColumnIndex(contractClass._ID)
     }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        var taskId: Int = 0
         var task = itemView.findViewById<TextView>(R.id.tv_task)!!
         var taskCompleted = itemView.findViewById<TextView>(R.id.tv_task_completed)!!
     }
@@ -41,5 +44,6 @@ class TaskAdapter(private val context: Context, private val cursor: Cursor):
         cursor.moveToPosition(position)
         holder.task.text = cursor.getString(taskPos)
         holder.taskCompleted.text = cursor.getString(completed)
+        holder.taskId = cursor.getInt(id)
     }
 }
