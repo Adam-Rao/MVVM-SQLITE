@@ -1,29 +1,17 @@
 package db
 
-import android.content.Context
-import android.database.sqlite.SQLiteDatabase
-import android.database.sqlite.SQLiteOpenHelper
+import viewmodel.TaskDao
 
-class Database(
-    context: Context?,
-    name: String?,
-    factory: SQLiteDatabase.CursorFactory?,
-    version: Int
-) : SQLiteOpenHelper(context, name, factory, version) {
+class Database {
+    var taskDao = TaskDao()
+        private set
 
     companion object {
-        const val DATABASE_NAME = "TASKS.db"
-        const val DATABASE_VERSION = 1
+        @Volatile private var instance: Database? = null
+
+        fun getInstance() = instance?: synchronized(this) {
+            instance ?: Database().also{instance = it}
+        }
     }
 
-    //Secondary Constructor
-    constructor(context: Context?) : this(context, DATABASE_NAME, null, DATABASE_VERSION)
-
-    override fun onCreate(db: SQLiteDatabase?) {
-        db?.execSQL(ContractClass.Task.CREATE_TASK_TABLE)
-    }
-
-    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 }

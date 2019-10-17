@@ -13,6 +13,8 @@ class ContractClass private constructor() {
                     "$TASK_COLUMN VARCHAR(256), " +
                     "$COMPLETED_COLUMN VARCHAR(256)" +
                     ")"
+
+            const val DELETE_TASK_TABLE = "DELETE * FROM tasks"
         }
     }
 }

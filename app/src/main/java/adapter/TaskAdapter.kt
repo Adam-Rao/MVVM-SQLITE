@@ -24,6 +24,10 @@ class TaskAdapter(private val context: Context, private val cursor: Cursor):
         this.id = cursor.getColumnIndex(contractClass._ID)
     }
 
+    fun changeCursor(cursor: Cursor) {
+        changeCursor(cursor)
+    }
+
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         var taskId: Int = 0
         var task = itemView.findViewById<TextView>(R.id.tv_task)!!
