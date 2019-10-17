@@ -6,4 +6,5 @@
     <string name="view_all_tasks">View All Tasks</string>
     <string name="update_task">Update Task</string>
     <string name="delete_task">Delete Task</string>
+    <string name="delete_all_tasks">Delete All Tasks</string>
 </resources>
