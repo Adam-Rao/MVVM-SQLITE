@@ -44,17 +44,4 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/btn_add_task"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/add_task"
-        android:layout_marginStart="@dimen/general_dimension"
-        android:layout_marginTop="@dimen/general_dimension"
-        android:layout_marginEnd="@dimen/general_dimension"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/task_completed_layout" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

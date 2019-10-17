@@ -7,6 +7,6 @@ import androidx.lifecycle.ViewModelProvider
 class ViewModelFactory(private val taskRepository: TaskRepository) :
     ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return MainActivityViewModel(taskRepository) as T
+        return TaskViewModel(taskRepository) as T
     }
 }

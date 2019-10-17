@@ -1,6 +1,7 @@
 package viewmodel
 
 import android.content.ContentValues
+import android.database.Cursor
 import android.os.AsyncTask
 import db.ContractClass
 import db.DatabaseOpenHelper
@@ -9,7 +10,7 @@ class TaskDao {
 
     val contractClass = ContractClass.Task
 
-    fun deleteAllRecords(db: DatabaseOpenHelper) {
+    companion object fun deleteAllRecords(db: DatabaseOpenHelper) {
         val database = db.writableDatabase
 
         class DeleteAll : AsyncTask<Void, Void, Unit>() {
@@ -84,5 +85,75 @@ class TaskDao {
 
         val task = TaskCompleted()
         task.execute()
+    }
+
+    fun loadTasks(db: DatabaseOpenHelper): Cursor? {
+
+        val database = db.readableDatabase
+        var cursor: Cursor? = null
+
+        val columns = arrayOf(
+            contractClass.TASK_COLUMN,
+            contractClass.COMPLETED_COLUMN
+        )
+
+        class LoadStuff: AsyncTask<Void, Void, Cursor?>() {
+            override fun doInBackground(vararg params: Void?): Cursor? {
+                return database.query(
+                    contractClass.TABLE_NAME,
+                    columns,
+                    null, null, null, null, null
+                )
+            }
+
+            override fun onPostExecute(result: Cursor?) {
+                cursor = result
+            }
+        }
+
+        val task = LoadStuff()
+        task.execute()
+
+        return cursor
+    }
+
+    fun loadSpecificTask(db: DatabaseOpenHelper, id: Int): List<String> {
+
+        val database = db.readableDatabase
+        val item = mutableListOf<String>()
+
+        val columns = arrayOf(
+            contractClass.TASK_COLUMN,
+            contractClass.COMPLETED_COLUMN
+        )
+
+        val selection = "${contractClass._ID } = ?"
+        val selectionArg = arrayOf(id.toString())
+
+        class LoadStuff: AsyncTask<Void, Void, Cursor?>() {
+            override fun doInBackground(vararg params: Void?): Cursor? {
+                return database.query(
+                    contractClass.TABLE_NAME,
+                    columns,
+                    selection, selectionArg, null, null, null
+                )
+            }
+
+            override fun onPostExecute(result: Cursor?) {
+                val taskIndex = result!!.getColumnIndex(contractClass.TASK_COLUMN)
+                val completedIndex = result.getColumnIndex(contractClass.COMPLETED_COLUMN)
+
+                val task = result.getString(taskIndex)
+                val taskCompleted = result.getString(completedIndex)
+
+                item.add(task)
+                item.add(taskCompleted)
+            }
+        }
+
+        val task = LoadStuff()
+        task.execute()
+
+        return item
     }
 }
