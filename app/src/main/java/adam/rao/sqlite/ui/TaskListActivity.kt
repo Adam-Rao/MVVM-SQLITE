@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import db.DatabaseOpenHelper
@@ -31,6 +32,8 @@ class TaskListActivity : AppCompatActivity() {
         taskRecyclerView = findViewById(R.id.rvTaskList)
 
         adapter = TaskAdapter(this, null)
+        taskRecyclerView.adapter = adapter
+        taskRecyclerView.layoutManager = LinearLayoutManager(this)
         database = DatabaseOpenHelper(this)
         val factory = utils.utils.provideViewModelFactory(this)
         viewModel = ViewModelProviders.of(this, factory).get(TaskViewModel::class.java)
@@ -42,8 +45,7 @@ class TaskListActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        cursor = viewModel.loadTasks(database)
-        adapter.changeCursor(cursor)
+        loadTasks()
     }
 
     override fun onDestroy() {
@@ -68,5 +70,10 @@ class TaskListActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun loadTasks() {
+        cursor = viewModel.loadTasks(database)
+        adapter.changeCursor(cursor)
     }
 }

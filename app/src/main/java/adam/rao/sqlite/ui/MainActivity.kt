@@ -62,11 +62,13 @@ class MainActivity : AppCompatActivity() {
         return when(item!!.itemId) {
             R.id.save_task -> {
                 viewModel.writeRecord(database, task.text.toString(), taskCompleted.text.toString())
+                task.setText("")
+                taskCompleted.setText("")
                 Toast.makeText(this, "Record Saved Successfully", Toast.LENGTH_LONG).show()
                 return true
             }
             R.id.view_all_tasks -> {
-                startActivity(Intent(this@MainActivity, ListActivity::class.java))
+                startActivity(Intent(this@MainActivity, TaskListActivity::class.java))
                 return true
             }
             R.id.delete_task -> {
