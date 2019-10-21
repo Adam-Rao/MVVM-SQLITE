@@ -9,12 +9,10 @@ class ContractClass private constructor() {
             const val COMPLETED_COLUMN = "task_completed"
 
             const val CREATE_TASK_TABLE = "CREATE TABLE $TABLE_NAME (" +
-                    "$_ID INTEGER PRIMARY KEY, " +
+                    "$_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     "$TASK_COLUMN VARCHAR(256), " +
                     "$COMPLETED_COLUMN VARCHAR(256)" +
                     ")"
-
-            const val DELETE_TASK_TABLE = "DELETE * FROM tasks"
         }
     }
 }

@@ -1,7 +1,6 @@
 package adam.rao.sqlite.ui
 
 import adam.rao.sqlite.R
-import android.app.ListActivity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -41,9 +40,9 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         if(id != 0) {
-            val taskItem = viewModel.loadSpecificTask(database, id)
-            task.setText(taskItem[0])
-            taskCompleted.setText(taskItem[1])
+            val taskItem = viewModel.loadSpecificTask(this, id)
+            task.setText(taskItem.task)
+            taskCompleted.setText(taskItem.task)
 
         }
     }
@@ -61,7 +60,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return when(item!!.itemId) {
             R.id.save_task -> {
-                viewModel.writeRecord(database, task.text.toString(), taskCompleted.text.toString())
+                viewModel.writeRecord(this, task.text.toString(), taskCompleted.text.toString())
                 task.setText("")
                 taskCompleted.setText("")
                 Toast.makeText(this, "Record Saved Successfully", Toast.LENGTH_LONG).show()
@@ -72,11 +71,15 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
             R.id.delete_task -> {
-                viewModel.deleteSpecificRecord(database, id)
+                viewModel.deleteSpecificRecord(this, id)
+                task.setText("")
+                taskCompleted.setText("")
                 return true
             }
             R.id.update_task -> {
-                viewModel.updateTask(database, id, task.text.toString(), taskCompleted.text.toString())
+                viewModel.updateTask(this, id, task.text.toString(), taskCompleted.text.toString())
+                task.setText("")
+                taskCompleted.setText("")
                 return true
             }
             else -> super.onOptionsItemSelected(item)

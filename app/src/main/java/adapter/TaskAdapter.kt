@@ -4,40 +4,17 @@ import adam.rao.sqlite.R
 import adam.rao.sqlite.ui.MainActivity
 import android.content.Context
 import android.content.Intent
-import android.database.Cursor
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import db.ContractClass
+import model.TaskModel
 
-class TaskAdapter(private val context: Context, private var mCursor: Cursor?):
+class TaskAdapter(private val context: Context, private val tasks: ArrayList<TaskModel>?):
     RecyclerView.Adapter<TaskAdapter.ViewHolder>() {
 
-    private var taskPos: Int = 0
-    private var completed: Int = 0
-    private val contractClass = ContractClass.Task
-    private var id: Int= 0
     private val TASK_ID = "task_id"
-
-    fun changeCursor(cursor: Cursor?) {
-        if(mCursor != null) {
-            mCursor!!.close()
-        }
-        mCursor = cursor
-        getIndices()
-        notifyDataSetChanged()
-    }
-
-    private fun getIndices() {
-        if(mCursor == null) {
-            return
-        }
-        taskPos = mCursor?.getColumnIndex(contractClass.TASK_COLUMN) as Int
-        completed = mCursor?.getColumnIndex(contractClass.COMPLETED_COLUMN) as Int
-        id = mCursor?.getColumnIndex(contractClass._ID) as Int
-    }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), View.OnClickListener {
         var taskId: Int = 0
@@ -58,17 +35,13 @@ class TaskAdapter(private val context: Context, private var mCursor: Cursor?):
     }
 
     override fun getItemCount(): Int {
-        return if(mCursor == null) {
-            0
-        } else {
-            mCursor!!.count
-        }
+        return tasks?.size as Int
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        mCursor?.moveToPosition(position)
-        holder.task.text = mCursor?.getString(taskPos)
-        holder.taskCompleted.text = mCursor?.getString(completed)
-        holder.taskId = mCursor?.getInt(id) as Int
+        val task = tasks?.get(position)
+        holder.task.text = task?.task
+        holder.taskCompleted.text = task?.completed
+        holder.taskId = task?.id as Int
     }
 }

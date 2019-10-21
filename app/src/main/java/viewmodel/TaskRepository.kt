@@ -1,24 +1,26 @@
 package viewmodel
 
-import android.database.Cursor
-import db.DatabaseOpenHelper
+import android.content.Context
+import model.TaskModel
 
 class TaskRepository(private val taskDao: TaskDao) {
-    fun deleteAllRecords(db: DatabaseOpenHelper) = taskDao.deleteAllRecords(db)
+    fun deleteAllRecords(context: Context) = taskDao.deleteAllRecords(context)
 
-    fun deleteSpecificRecord(db: DatabaseOpenHelper, id: Int) = taskDao.deleteSpecificRecord(db, id)
+    fun deleteSpecificRecord(context: Context, id: Int) = taskDao.deleteSpecificRecord(context, id)
 
-    fun writeRecord(db: DatabaseOpenHelper, task: String, completed: String) =
-        taskDao.writeRecord(db, task, completed)
+    fun writeRecord(context: Context, task: String, completed: String) =
+        taskDao.writeRecord(context, task, completed)
 
-    fun updateTask(db: DatabaseOpenHelper, id: Int, task: String, completed: String) =
-        taskDao.updateTask(db, id, task, completed)
+    fun updateTask(context: Context, id: Int, task: String, completed: String) =
+        taskDao.updateTask(context, id, task, completed)
 
-    fun loadTasks(db: DatabaseOpenHelper): Cursor? =
-        taskDao.loadTasks(db)
+    fun loadTasks(context: Context): ArrayList<TaskModel> =
+        taskDao.loadTasks(context)
 
-    fun loadSpecificTask(db: DatabaseOpenHelper, id: Int): List<String> =
-        taskDao.loadSpecificTask(db, id)
+    fun loadSpecificTask(context: Context, id: Int): TaskModel =
+        taskDao.loadSpecificTask(context, id)
+
+    fun closeDatabase(context: Context) = taskDao.closeDatabase(context)
 
     companion object {
         @Volatile private var instance: TaskRepository? = null

@@ -1,23 +1,25 @@
 package viewmodel
 
-import android.database.Cursor
+import android.content.Context
 import androidx.lifecycle.ViewModel
-import db.DatabaseOpenHelper
+import model.TaskModel
 
 class TaskViewModel(private val taskRepository: TaskRepository) : ViewModel() {
-    fun deleteAllRecords(db: DatabaseOpenHelper) = taskRepository.deleteAllRecords(db)
+    fun deleteAllRecords(context: Context) = taskRepository.deleteAllRecords(context)
 
-    fun deleteSpecificRecord(db: DatabaseOpenHelper, id: Int) = taskRepository.deleteSpecificRecord(db, id)
+    fun deleteSpecificRecord(context: Context, id: Int) = taskRepository.deleteSpecificRecord(context, id)
 
-    fun writeRecord(db: DatabaseOpenHelper, task: String, taskCompleted: String) =
-        taskRepository.writeRecord(db, task, taskCompleted)
+    fun writeRecord(context: Context, task: String, taskCompleted: String) =
+        taskRepository.writeRecord(context, task, taskCompleted)
 
-    fun updateTask(db: DatabaseOpenHelper, id:Int, task: String, taskCompleted: String) =
-        taskRepository.updateTask(db, id, task, taskCompleted)
+    fun updateTask(context: Context, id:Int, task: String, taskCompleted: String) =
+        taskRepository.updateTask(context, id, task, taskCompleted)
 
-    fun loadTasks(db: DatabaseOpenHelper): Cursor? =
-        taskRepository.loadTasks(db)
+    fun loadTasks(context: Context): ArrayList<TaskModel> =
+        taskRepository.loadTasks(context)
 
-    fun  loadSpecificTask(db: DatabaseOpenHelper, id: Int): List<String> =
-        taskRepository.loadSpecificTask(db, id)
+    fun  loadSpecificTask(context: Context, id: Int): TaskModel =
+        taskRepository.loadSpecificTask(context, id)
+
+    fun closeDatabase(context: Context) = taskRepository.closeDatabase(context)
 }
