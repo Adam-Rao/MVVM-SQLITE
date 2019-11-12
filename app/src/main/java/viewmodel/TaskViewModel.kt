@@ -18,7 +18,7 @@ class TaskViewModel(private val taskRepository: TaskRepository) : ViewModel() {
     fun loadTasks(context: Context): ArrayList<TaskModel> =
         taskRepository.loadTasks(context)
 
-    fun  loadSpecificTask(context: Context, id: Int): TaskModel =
+    fun  loadSpecificTask(context: Context, id: Int): TaskModel? =
         taskRepository.loadSpecificTask(context, id)
 
     fun closeDatabase(context: Context) = taskRepository.closeDatabase(context)

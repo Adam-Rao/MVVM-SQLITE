@@ -4,6 +4,7 @@ import adam.rao.sqlite.R
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -26,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         intent = intent
-        id = intent.getIntExtra(TASK_ID, 0)
+        id = intent.getIntExtra(TASK_ID, -1)
 
         task = findViewById(R.id.et_task_input)
         taskCompleted = findViewById(R.id.et_completed_input)
@@ -39,12 +40,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if(id != 0) {
-            val taskItem = viewModel.loadSpecificTask(this, id)
-            task.setText(taskItem.task)
-            taskCompleted.setText(taskItem.task)
+        val taskItem = viewModel.loadSpecificTask(this, id)
+        Log.d("Task", "${taskItem?.task}")
+        Log.d("Completed", "${taskItem?.completed}")
+        task.setText(taskItem?.task)
+        taskCompleted.setText(taskItem?.completed)
 
-        }
+        Log.d("Task Id", "$id")
     }
 
     override fun onDestroy() {

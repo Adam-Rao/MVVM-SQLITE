@@ -163,12 +163,12 @@ class TaskDao {
         return tasks
     }
 
-    fun loadSpecificTask(context: Context, id: Int): TaskModel {
+    fun loadSpecificTask(context: Context, id: Int): TaskModel? {
 
         val db = DatabaseOpenHelper(context)
         val database = db.readableDatabase
 
-        lateinit var specificTask: TaskModel
+        var specificTask: TaskModel? = null
 
         val columns = arrayOf(
             contractClass.TASK_COLUMN,
@@ -188,14 +188,16 @@ class TaskDao {
             }
 
             override fun onPostExecute(result: Cursor) {
-                val taskIndex = result.getColumnIndex(contractClass.TASK_COLUMN)
-                val completedIndex = result.getColumnIndex(contractClass.COMPLETED_COLUMN)
+                if(result.moveToNext()) {
+                    val taskIndex = result.getColumnIndex(contractClass.TASK_COLUMN)
+                    val completedIndex = result.getColumnIndex(contractClass.COMPLETED_COLUMN)
 
-                val task = result.getString(taskIndex)
-                val taskCompleted = result.getString(completedIndex)
+                    val task = result.getString(taskIndex)
+                    val taskCompleted = result.getString(completedIndex)
 
-                specificTask = TaskModel(task, taskCompleted)
-                result.close()
+                    specificTask = TaskModel(task, taskCompleted)
+                    result.close()
+                }
             }
         }
 

@@ -17,7 +17,7 @@ class TaskRepository(private val taskDao: TaskDao) {
     fun loadTasks(context: Context): ArrayList<TaskModel> =
         taskDao.loadTasks(context)
 
-    fun loadSpecificTask(context: Context, id: Int): TaskModel =
+    fun loadSpecificTask(context: Context, id: Int): TaskModel? =
         taskDao.loadSpecificTask(context, id)
 
     fun closeDatabase(context: Context) = taskDao.closeDatabase(context)

@@ -4,6 +4,7 @@ import adam.rao.sqlite.R
 import adam.rao.sqlite.ui.MainActivity
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,16 +17,10 @@ class TaskAdapter(private val context: Context, private val tasks: ArrayList<Tas
 
     private val TASK_ID = "task_id"
 
-    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         var taskId: Int = 0
         var task = itemView.findViewById<TextView>(R.id.tv_task)!!
         var taskCompleted = itemView.findViewById<TextView>(R.id.tv_task_completed)!!
-
-        override fun onClick(v: View?) {
-            val intent = Intent(v?.context, MainActivity::class.java)
-            intent.putExtra(TASK_ID, taskId)
-            v?.context?.startActivity(intent)
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -43,5 +38,11 @@ class TaskAdapter(private val context: Context, private val tasks: ArrayList<Tas
         holder.task.text = task?.task
         holder.taskCompleted.text = task?.completed
         holder.taskId = task?.id as Int
+
+        holder.itemView.setOnClickListener {
+            val intent = Intent(context, MainActivity::class.java)
+            intent.putExtra(TASK_ID, holder.taskId)
+            context.startActivity(intent)
+        }
     }
 }
